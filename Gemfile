@@ -70,3 +70,13 @@ end
 group :development do
   gem 'rubocop', '1.71.2', require: false
 end
+
+# 本番(Render)用のDBは PostgreSQL
+group :production do
+  gem "pg", "~> 1.5"
+end
+
+# 開発/テスト用に MySQL を使う場合はこちらを追加
+group :development, :test do
+  gem "mysql2", "~> 0.5"
+end
