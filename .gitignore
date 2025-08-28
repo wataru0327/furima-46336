@@ -34,7 +34,12 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+<<<<<<< HEAD
 # Windows や Mac が勝手に生成する不要ファイルを無視
 **/.DS_Store
 *.Zone.Identifier
 *:[Zz]one.Identifier
+=======
+*:Zone.Identifier
+*:[Zz]one.Identifier*.Zone.Identifier
+>>>>>>> 9dd1607 (Ignore Windows Zone.Identifier files)
