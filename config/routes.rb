@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  root "items#index" 
+  # トップページを items#index に設定
+  root "items#index"
+
+  # items リソースを定義
   resources :items
-end
+
+  # Rails のヘルスチェック用
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
+  # 例: 他の root を設定したい場合のテンプレート
   # root "posts#index"
 end
