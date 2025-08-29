@@ -9,7 +9,7 @@ class User < ApplicationRecord
   
 
   validates :last_name, :first_name, presence: true,
-            format: { with: /\A[ぁ-んァ-ン一-龥々]+\z/, message: "全角文字を使用してください" }
+          format: { with: /\A[ぁ-んァ-ン一-龥々ー]+\z/, message: "全角文字を使用してください" }
 
 
   validates :last_name_kana, :first_name_kana, presence: true,
