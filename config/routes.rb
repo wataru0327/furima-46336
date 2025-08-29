@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'items/index'
   # トップページを items#index に設定
   root "items#index"
