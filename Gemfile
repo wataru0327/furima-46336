@@ -40,3 +40,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'active_hash'
