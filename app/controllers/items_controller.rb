@@ -6,7 +6,6 @@ class ItemsController < ApplicationController
   end
 
   def new
-    # 新規出品ページ用
     @item = Item.new
   end
 
