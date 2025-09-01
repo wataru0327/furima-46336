@@ -32,12 +32,12 @@
     </div>
 
     <%# 出品者/購入ボタンの制御 %>
-    <% if user_signed_in? && !@item.sold_out? %>
+    <% if user_signed_in? %>
       <% if current_user == @item.user %>
         <%# 出品者本人（販売中） → 編集・削除 %>
-        <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除", item_path(@item), data: { turbo_method: :delete, confirm: "本当に削除しますか？" }, class: "item-destroy" %>
+            <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
+            <p class="or-text">or</p>
+            <%= link_to "削除", "#", data: {turbo_method: :delete}, class:"item-destroy" %>
       <% else %>
         <%# 出品者以外（販売中） → 購入 %>
         <%= link_to "購入画面に進む", "#", class: "item-red-btn" %>
