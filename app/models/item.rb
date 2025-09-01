@@ -29,6 +29,11 @@ class Item < ApplicationRecord
     validates :days_to_ship_id
   end
 
-  # 価格の範囲指定
-  validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+  # 価格の範囲指定（空欄のときは presence が優先されるように allow_blank: true を追加）
+  validates :price, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 300,
+    less_than_or_equal_to: 9_999_999,
+    allow_blank: true
+  }
 end
