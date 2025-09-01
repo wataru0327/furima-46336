@@ -1,6 +1,9 @@
-document.addEventListener("turbo:load", () => {
+document.addEventListener("turbo:load", setupPriceCalc);
+document.addEventListener("turbo:render", setupPriceCalc);
+
+function setupPriceCalc() {
   const priceInput = document.getElementById("item-price");
-  if (!priceInput) return; // 出品ページ以外では動作しないようにする
+  if (!priceInput) return;
 
   priceInput.addEventListener("input", () => {
     const price = parseInt(priceInput.value, 10);
@@ -11,10 +14,10 @@ document.addEventListener("turbo:load", () => {
       tax.textContent = 0;
       profit.textContent = 0;
     } else {
-      const taxValue = Math.floor(price * 0.1); // 10% 手数料（小数点以下切り捨て）
+      const taxValue = Math.floor(price * 0.1);
       const profitValue = Math.floor(price - taxValue);
       tax.textContent = taxValue;
       profit.textContent = profitValue;
     }
   });
-});
+}
