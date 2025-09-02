@@ -1,8 +1,6 @@
 <%= render "shared/header" %>
 <div class='main'>
 
-  <%# 画面上部の帯や特徴部分はそのまま %>
-
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
@@ -13,7 +11,7 @@
       <% if @items.present? %>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to "#" do %>
+            <%= link_to item_path(item) do %>  <%# ★ 修正: # → item_path(item) に変更 %>
               <div class='item-img-content'>
                 <% if item.image.attached? %>
                   <%= image_tag item.image, class: "item-img" %>
