@@ -10,8 +10,6 @@ class Item < ApplicationRecord
 
   has_one_attached :image
 
-  attribute :status, :boolean, default: false
-
   with_options presence: true do
     validates :name
     validates :description
