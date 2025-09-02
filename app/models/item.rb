@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   belongs_to :days_to_ship
 
   has_one_attached :image
+  has_one :order 
 
   with_options presence: true do
     validates :name
@@ -31,3 +32,4 @@ class Item < ApplicationRecord
     less_than_or_equal_to: 9_999_999
   }, allow_blank: true
 end
+
