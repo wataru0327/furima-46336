@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
-  #has_one :order
+  has_one :order
 
 
   extend ActiveHash::Associations::ActiveRecordExtensions
@@ -38,7 +38,7 @@ class Item < ApplicationRecord
   }, allow_blank: true
 
  
-  #def sold_out?
-    #order.present?
-  #end
+  def sold_out?
+     self.order.present?
+  end
 end
