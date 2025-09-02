@@ -1,7 +1,5 @@
 class Item < ApplicationRecord
   belongs_to :user
-  # has_one :order
-
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
@@ -10,9 +8,9 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :days_to_ship
 
-
   has_one_attached :image
 
+  attribute :status, :boolean, default: false
 
   with_options presence: true do
     validates :name
@@ -20,7 +18,6 @@ class Item < ApplicationRecord
     validates :image
     validates :price
   end
-
 
   with_options numericality: { other_than: 1, message: "を選んでください" } do
     validates :category_id
@@ -30,15 +27,9 @@ class Item < ApplicationRecord
     validates :days_to_ship_id
   end
 
- 
   validates :price, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 300,
     less_than_or_equal_to: 9_999_999
   }, allow_blank: true
-
- 
-  # def sold_out?
-  #   self.order.present?
-  # end
 end
