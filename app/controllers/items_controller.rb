@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :set_item, only: [:show, :edit, :update]
-  before_action :move_to_index, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
-      redirect_to root_path, notice: 
+      redirect_to root_path, notice: '商品を出品しました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    
   end
 
   def update
@@ -32,10 +31,15 @@ class ItemsController < ApplicationController
     update_params = update_params.except(:image) if update_params[:image].blank?
 
     if @item.update(update_params)
-      redirect_to @item, notice: 
+      redirect_to @item, notice: '商品情報を更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @item.destroy
+    redirect_to root_path, notice: '商品を削除しました'
   end
 
   private
