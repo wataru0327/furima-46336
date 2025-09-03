@@ -1,6 +1,6 @@
 <%= render "shared/header" %>
 
-<%# 商品の概要 %>
+
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
@@ -14,8 +14,8 @@
         <%= image_tag "item-sample.png", class: "item-box-img" %>
       <% end %>
 
-      <%# 売却済み商品のラベル（購入機能実装後に切り替え予定） %>
-      <% if false %>
+
+      <% if @item.order.present? %>
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>
@@ -31,18 +31,20 @@
       </span>
     </div>
 
-    <%# 出品者/購入ボタンの制御 %>
+
     <% if user_signed_in? %>
-      <% if current_user == @item.user %>
-        <%# 出品者本人 → 編集・削除 %>
-        <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除", item_path(@item),
-              data: { turbo_method: :delete, confirm: "本当に削除しますか？" },
-              class:"item-destroy" %>
-      <% else %>
-        <%# 出品者以外 → 購入 %>
-        <%= link_to "購入画面に進む", item_orders_path(@item), class: "item-red-btn" %>
+      <% unless @item.order.present? %> 
+        <% if current_user == @item.user %>
+ 
+          <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
+          <p class="or-text">or</p>
+          <%= link_to "削除", item_path(@item),
+                data: { turbo_method: :delete, confirm: "本当に削除しますか？" },
+                class:"item-destroy" %>
+        <% else %>
+ 
+          <%= link_to "購入画面に進む", item_orders_path(@item), class: "item-red-btn" %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -90,7 +92,7 @@
       </div>
     </div>
   </div>
-  <%# /商品の概要 %>
+
 
   <div class="comment-box">
     <form>
@@ -112,9 +114,10 @@
     <a href="#" class="change-item-btn">後ろの商品 ＞</a>
   </div>
 
-  <%# カテゴリーリンク %>
+
   <a href="#" class="another-item"><%= @item.category.name %>をもっと見る</a> 
 </div>
 
 <%= render "shared/footer" %>
+
 

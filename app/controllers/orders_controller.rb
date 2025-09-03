@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!   # ログイン必須
+  before_action :authenticate_user!  
   before_action :set_item
   before_action :move_to_index
 
@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
   def create
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
-      pay_item   # ← 決済処理を追加
+      pay_item   
       @order_address.save
       redirect_to root_path, notice: "購入が完了しました"
     else
@@ -36,12 +36,13 @@ class OrdersController < ApplicationController
     end
   end
 
-  # 決済処理
   def pay_item
+    Payjp.api_key = Rails.application.credentials.dig(:payjp, :secret_key)  
     Payjp::Charge.create(
-      amount: @item.price,             
-      card: order_params[:token],    
+      amount: @item.price,            
+      card: order_params[:token],     
       currency: 'jpy'                 
     )
   end
 end
+
