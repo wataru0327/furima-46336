@@ -11,7 +11,7 @@
       <% if @items.present? %>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to item_path(item) do %>  <%# ★ 修正: # → item_path(item) に変更 %>
+            <%= link_to item_path(item) do %>
               <div class='item-img-content'>
                 <% if item.image.attached? %>
                   <%= image_tag item.image, class: "item-img" %>
@@ -19,8 +19,8 @@
                   <%= image_tag "item-sample.png", class: "item-img" %>
                 <% end %>
 
-                <%# 売却済み商品のラベル（購入機能追加後に拡張予定） %>
-                <% if false %> <%# item.sold_out? がtrueになる条件を後で実装 %>
+           
+                <% if item.order.present? %>
                   <div class='sold-out'>
                     <span>Sold Out!!</span>
                   </div>
@@ -44,7 +44,7 @@
           </li>
         <% end %>
       <% else %>
-        <%# 出品商品がない場合のダミー %>
+  
         <li class='list'>
           <%= link_to '#' do %>
             <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
@@ -63,7 +63,7 @@
       <% end %>
     </ul>
   </div>
-  <%# /商品一覧 %>
+
 </div>
 
 <%= link_to(new_item_path, class: 'purchase-btn') do %>

@@ -1,42 +1,46 @@
-
-document.addEventListener('turbo:load', () => {
+document.addEventListener("turbo:load", () => {
   const form = document.getElementById("charge-form");
-  if (!form) return; 
-
+  if (!form) return;
 
   const publicKey = document.querySelector("meta[name='payjp-public-key']").content;
-  Payjp.setPublicKey(publicKey);  
+  const payjp = Payjp(publicKey);
+  const elements = payjp.elements();
 
-  form.addEventListener("submit", (e) => {
+  const numberElement = elements.create("cardNumber");
+  const expiryElement = elements.create("cardExpiry");
+  const cvcElement = elements.create("cardCvc");
+
+  numberElement.mount("#card-number");
+  expiryElement.mount("#card-exp");
+  cvcElement.mount("#card-cvc");
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const formData = new FormData(form);
+    const { error, id } = await payjp.createToken(numberElement);
 
-   
-    const card = {
-      number: formData.get("number"),
-      cvc: formData.get("cvc"),
-      exp_month: formData.get("exp_month"),
-      exp_year: `20${formData.get("exp_year")}`, 
-    };
+    if (error) {
+      console.error("トークン作成エラー:", error);
+      alert("カード情報が正しくありません");
+      return;
+    }
 
-    Payjp.createToken(card, (status, response) => {
-      if (status === 200) {
-        const token = response.id;
-        const tokenInput = document.createElement("input");
-        tokenInput.setAttribute("type", "hidden");
-        tokenInput.setAttribute("name", "token");
-        tokenInput.setAttribute("value", token);
-        form.appendChild(tokenInput);
+    const tokenObj = document.createElement("input");
+    tokenObj.setAttribute("type", "hidden");
+    tokenObj.setAttribute("name", "token");
+    tokenObj.setAttribute("value", id);
+    form.appendChild(tokenObj);
 
-        document.getElementById("number-form").remove();
-        document.getElementById("cvc-form").remove();
-        document.getElementById("expiry-form").remove();
-
-        form.submit();  
-      } else {
-        alert("カード情報が正しくありません");
-      }
-    });
+    form.submit();
   });
 });
+
+
+
+
+
+
+
+
+
+

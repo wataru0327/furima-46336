@@ -10,6 +10,8 @@
   <%= javascript_importmap_tags %>
 
   <meta name="payjp-public-key" content="<%= Rails.application.credentials.dig(:payjp, :public_key) %>">
+
+  <script src="https://js.pay.jp/v2/"></script>
 </head>
 
 <body>
