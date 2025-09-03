@@ -6,18 +6,21 @@ document.addEventListener("turbo:load", () => {
   const payjp = Payjp(publicKey);
   const elements = payjp.elements();
 
-  const numberElement = elements.create("cardNumber");
-  const expiryElement = elements.create("cardExpiry");
-  const cvcElement = elements.create("cardCvc");
+  if (!document.querySelector("#card-number iframe")) {
+    const numberElement = elements.create("cardNumber");
+    numberElement.mount("#card-number");
 
-  numberElement.mount("#card-number");
-  expiryElement.mount("#card-exp");
-  cvcElement.mount("#card-cvc");
+    const expiryElement = elements.create("cardExpiry");
+    expiryElement.mount("#card-exp");
+
+    const cvcElement = elements.create("cardCvc");
+    cvcElement.mount("#card-cvc");
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const { error, id } = await payjp.createToken(numberElement);
+    const { error, id } = await payjp.createToken();
 
     if (error) {
       console.error("トークン作成エラー:", error);
@@ -25,6 +28,7 @@ document.addEventListener("turbo:load", () => {
       return;
     }
 
+  
     const tokenObj = document.createElement("input");
     tokenObj.setAttribute("type", "hidden");
     tokenObj.setAttribute("name", "token");
@@ -34,6 +38,7 @@ document.addEventListener("turbo:load", () => {
     form.submit();
   });
 });
+
 
 
 
