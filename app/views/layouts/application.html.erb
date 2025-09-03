@@ -8,6 +8,8 @@
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
+
+  <meta name="payjp-public-key" content="<%= Rails.application.credentials.dig(:payjp, :public_key) %>">
 </head>
 
 <body>
