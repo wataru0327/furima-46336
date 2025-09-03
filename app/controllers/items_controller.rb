@@ -14,7 +14,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     if @item.save
-      redirect_to root_path, notice: '商品を出品しました'
+      redirect_to root_path, notice: 
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
     update_params = update_params.except(:image) if update_params[:image].blank?
 
     if @item.update(update_params)
-      redirect_to @item, notice: '商品情報を更新しました'
+      redirect_to @item, notice: 
     else
       render :edit, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    redirect_to root_path, notice: '商品を削除しました'
+    redirect_to root_path, notice: 
   end
 
   private
@@ -63,6 +63,8 @@ class ItemsController < ApplicationController
   end
 
   def move_to_index
-    redirect_to root_path unless current_user.id == @item.user_id
+    if current_user.id != @item.user_id || @item.order.present?
+      redirect_to root_path
+    end
   end
 end

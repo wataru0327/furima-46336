@@ -42,3 +42,9 @@ group :test do
 end
 
 gem 'active_hash'
+
+gem 'payjp'
+
+group :test do
+  gem 'database_cleaner-active_record'
+end
