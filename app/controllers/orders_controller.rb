@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
       @order_address.save
       redirect_to root_path, notice: "購入が完了しました"
     else
+
       render :index, status: :unprocessable_entity
     end
   end
@@ -45,4 +46,5 @@ class OrdersController < ApplicationController
     )
   end
 end
+
 

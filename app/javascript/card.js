@@ -1,31 +1,20 @@
 document.addEventListener("turbo:load", setupPayjpForm);
-document.addEventListener("turbo:render", setupPayjpForm);
 
 function setupPayjpForm() {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  if (form.dataset.payjpInitialized === "true") return;
+  // mount先を毎回リセット
+  ["card-number", "card-exp", "card-cvc"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = "";
+  });
 
-  if (typeof Payjp === "undefined") {
-    setTimeout(setupPayjpForm, 50);
-    return;
-  }
-
-  const numberEl = document.getElementById("card-number");
-  const expEl = document.getElementById("card-exp");
-  const cvcEl = document.getElementById("card-cvc");
-  if (!numberEl || !expEl || !cvcEl) {
-    setTimeout(setupPayjpForm, 50);
-    return;
-  }
-
-  form.dataset.payjpInitialized = "true";
+  if (typeof Payjp === "undefined") return;
 
   const publicKey = document.querySelector("meta[name='payjp-public-key']").content;
   const payjp = Payjp(publicKey);
   const elements = payjp.elements();
-
 
   const numberElement = elements.create("cardNumber");
   numberElement.mount("#card-number");
@@ -42,8 +31,8 @@ function setupPayjpForm() {
     const { error, id } = await payjp.createToken(numberElement);
 
     if (error) {
-      console.error("トークン作成エラー:", error);
-      alert("カード情報が正しくありません");
+      console.error("Payjp Error:", error); 
+      showError("クレジットカード情報を正しく入力してください");
       return;
     }
 
@@ -54,7 +43,25 @@ function setupPayjpForm() {
     form.appendChild(tokenObj);
 
     form.submit();
-  }, { once: true });
+  });
+}
+
+function showError(message) {
+  let errorBox = document.querySelector(".error-alert ul");
+
+  if (!errorBox) {
+    const alertDiv = document.createElement("div");
+    alertDiv.classList.add("error-alert");
+    const ul = document.createElement("ul");
+    alertDiv.appendChild(ul);
+    document.querySelector(".transaction-main").prepend(alertDiv);
+    errorBox = ul;
+  }
+
+  const li = document.createElement("li");
+  li.classList.add("error-message");
+  li.innerText = message;
+  errorBox.appendChild(li);
 }
 
 
