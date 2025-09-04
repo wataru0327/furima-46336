@@ -4,6 +4,9 @@
   <div class='transaction-main'>
     <h1 class='transaction-title-text'>購入内容の確認</h1>
 
+    <% if flash[:alert] %>
+      <p style="color: red; font-weight: bold; text-align: center;"><%= flash[:alert] %></p>
+    <% end %>
 
     <% if @order_address.errors.any? %>
       <div class="error-alert">
@@ -26,7 +29,6 @@
       </div>
     </div>
 
- 
     <div class='item-payment'>
       <h1 class='item-payment-title'>支払金額</h1>
       <p class='item-payment-price'>¥<%= @item.price %></p>
@@ -34,10 +36,8 @@
 
     <%= form_with model: @order_address, url: item_orders_path(@item), id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
 
-
       <div class='credit-card-form'>
         <h1 class='info-input-haedline'>クレジットカード情報入力</h1>
-
         <div class="form-group">
           <div class='form-text-wrap'>
             <label class="form-text">カード番号</label>
@@ -123,6 +123,7 @@
 </div>
 
 <%= render "shared/second-footer"%>
+
 
 
 
