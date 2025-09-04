@@ -2,6 +2,75 @@
 
 <div class='main'>
 
+  <div class="title-contents">
+    <h2 class="service-title">人生を変えるフリマアプリ</h2>
+    <p class="service-explain">
+      FURIMAはだれでもかんたんに出品・購入できるフリマアプリです
+    </p>
+    <div class="store-btn">
+      <%= image_tag "app-store.svg", class: "apple-btn" %>
+      <%= image_tag "google-play.png", class: "google-btn" %>
+    </div>
+  </div>
+
+  <div class="select-reason-contents">
+    <h2 class="title">FURIMAが選ばれる3つの理由</h2>
+    <ul class="reason-lists">
+      <li class="list">
+        <%= image_tag "furima-intro01.png", class: "list-pict" %>
+        <span class="reason-list-number">1</span>
+        <p class="reason-list-text">簡単に出品できる</p>
+        <p class="reason-list-description">スマホで撮ってすぐ出品</p>
+      </li>
+      <li class="list">
+        <%= image_tag "furima-intro02.png", class: "list-pict" %>
+        <span class="reason-list-number">2</span>
+        <p class="reason-list-text">すぐに購入できる</p>
+        <p class="reason-list-description">欲しいものがすぐ見つかる</p>
+      </li>
+      <li class="list">
+        <%= image_tag "furima-intro03.png", class: "list-pict" %>
+        <span class="reason-list-number">3</span>
+        <p class="reason-list-text">安心の取引</p>
+        <p class="reason-list-description">専用システムで安全にやりとり</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="ad-contents">
+    <h2 class="ad-title">会員数 日本一位</h2>
+    <p class="ad-explain">
+      FURIMAは多くのユーザーに選ばれています。  
+      初心者でも安心して利用できます。
+    </p>
+    <div class="store-btn">
+      <%= image_tag "app-store.svg", class: "apple-btn" %>
+      <%= image_tag "google-play.png", class: "google-btn" %>
+    </div>
+  </div>
+
+  <!-- FURIMAの特徴 -->
+  <div class="feature-contents">
+    <h2 class="title">FURIMAの特徴</h2>
+    <ul class="feature-lists">
+      <li class="list">
+        <%= image_tag "furima-intro04.png", class: "list-pict" %>
+        <p class="feature-list-text">多彩なカテゴリー</p>
+        <p class="feature-list-description">欲しい商品が必ず見つかる</p>
+      </li>
+      <li class="list">
+        <%= image_tag "furima-intro05.png", class: "list-pict" %>
+        <p class="feature-list-text">充実のサポート</p>
+        <p class="feature-list-description">困ったときも安心</p>
+      </li>
+      <li class="list">
+        <%= image_tag "furima-intro06.png", class: "list-pict" %>
+        <p class="feature-list-text">かんたん操作</p>
+        <p class="feature-list-description">誰でもすぐに使える</p>
+      </li>
+    </ul>
+  </div>
+
   <!-- 商品一覧 -->
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
@@ -18,14 +87,10 @@
                 <% else %>
                   <%= image_tag "item-sample.png", class: "item-img" %>
                 <% end %>
-
                 <% if item.order.present? %>
-                  <div class='sold-out'>
-                    <span>Sold Out!!</span>
-                  </div>
+                  <div class='sold-out'><span>Sold Out!!</span></div>
                 <% end %>
               </div>
-
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
                 <div class='item-price'>
@@ -69,3 +134,5 @@
 <% end %>
 
 <%= render "shared/footer" %>
+
+
