@@ -12,13 +12,17 @@ class OrderAddress
 
   validates :token, presence: { message: "クレジットカード情報を入力してください" }
 
-  validates :postal_code, presence: { message: "を入力してください" },
-                          format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁-4桁」で入力してください" }
+  # 郵便番号
+  validates :postal_code, presence: { message: "を入力してください" }
+  validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁-4桁」で入力してください" }
 
+  # 都道府県
   validates :prefecture_id, numericality: { other_than: 1, message: "を選択してください" }
 
-  validates :phone_number, presence: { message: "を入力してください" },
-                           format: { with: /\A\d{10,11}\z/, message: "は10桁以上11桁以内の半角数字で入力してください" }
+  # 電話番号
+  validates :phone_number, presence: { message: "を入力してください" }
+  validates :phone_number, format: { with: /\A[0-9]+\z/, message: "は数字で入力してください" }
+  validates :phone_number, length: { minimum: 10, maximum: 11, message: "は10桁以上11桁以内の半角数字で入力してください" }
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
@@ -37,6 +41,9 @@ class OrderAddress
     errors.full_messages.uniq
   end
 end
+
+
+
 
 
 
