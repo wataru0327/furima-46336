@@ -4,22 +4,6 @@
   <div class='transaction-main'>
     <h1 class='transaction-title-text'>購入内容の確認</h1>
 
-    <% if flash[:alert] %>
-      <p style="color: red; font-weight: bold; text-align: center;">
-        <%= flash[:alert] %>
-      </p>
-    <% end %>
-
-    <% if @order_address.errors.any? %>
-      <div class="error-alert">
-        <ul>
-          <% @order_address.errors.full_messages.each do |message| %>
-            <li class="error-message"><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
     <div class='buy-item-info'>
       <%= image_tag @item.image.attached? ? url_for(@item.image) : "item-sample.png", class: 'buy-item-img' %>
       <div class='buy-item-right-content'>
@@ -35,6 +19,16 @@
       <h1 class='item-payment-title'>支払金額</h1>
       <p class='item-payment-price'>¥<%= @item.price %></p>
     </div>
+
+    <% if @order_address.errors.any? %>
+      <div class="error-alert">
+        <ul>
+          <% @order_address.errors.full_messages.each do |message| %>
+            <li class="error-message"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <%= form_with model: @order_address, url: item_orders_path(@item), id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
 
@@ -125,6 +119,8 @@
 </div>
 
 <%= render "shared/second-footer"%>
+
+
 
 
 
