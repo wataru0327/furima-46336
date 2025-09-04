@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
       @order_address.save
       redirect_to root_path, notice: "購入が完了しました"
     else
-
+      flash.now[:alert] = "入力内容に不備があります。赤字のエラーメッセージを確認してください。"
       render :index, status: :unprocessable_entity
     end
   end
@@ -46,5 +46,6 @@ class OrdersController < ApplicationController
     )
   end
 end
+
 
 
