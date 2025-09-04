@@ -27,9 +27,10 @@ class Item < ApplicationRecord
   end
 
   validates :price, numericality: {
-    only_integer: true,
-    greater_than_or_equal_to: 300,
-    less_than_or_equal_to: 9_999_999
-  }, allow_blank: true
+    only_integer: true,                        
+    greater_than_or_equal_to: 300,             
+    less_than_or_equal_to: 9_999_999,            
+    message: "は半角数字で入力してください"
+  }
 end
 
