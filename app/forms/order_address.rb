@@ -3,19 +3,19 @@ class OrderAddress
   attr_accessor :user_id, :item_id, :postal_code, :prefecture_id,
                 :city, :address, :building, :phone_number, :token
 
-
   with_options presence: { message: "を入力してください" } do
     validates :user_id
     validates :item_id
-    validates :token
     validates :city
     validates :address
   end
 
+ 
+  validates :token, presence: { message: "クレジットカード情報を入力してください" }
+
 
   validates :postal_code, presence: { message: "を入力してください" },
                           format: { with: /\A\d{3}-\d{4}\z/, message: "は「3桁-4桁」で入力してください" }
-
 
   validates :prefecture_id, numericality: { other_than: 1, message: "を選択してください" }
 

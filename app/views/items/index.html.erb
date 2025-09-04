@@ -1,17 +1,17 @@
 <%= render "shared/header" %>
+
 <div class='main'>
 
-  <%# 商品一覧 %>
+  <!-- 商品一覧 -->
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
-    <div class="subtitle">
-      新規投稿商品
-    </div>
+    <div class="subtitle">新規投稿商品</div>
+
     <ul class='item-lists'>
       <% if @items.present? %>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to item_path(item) do %>
+            <%= link_to item_path(item), data: { turbo: false } do %>
               <div class='item-img-content'>
                 <% if item.image.attached? %>
                   <%= image_tag item.image, class: "item-img" %>
@@ -19,7 +19,6 @@
                   <%= image_tag "item-sample.png", class: "item-img" %>
                 <% end %>
 
-           
                 <% if item.order.present? %>
                   <div class='sold-out'>
                     <span>Sold Out!!</span>
@@ -31,11 +30,11 @@
                 <h3 class='item-name'><%= item.name %></h3>
                 <div class='item-price'>
                   <span>
-                    <%= item.price %>円<br>
+                    <%= number_to_currency(item.price, unit: "¥", precision: 0) %><br>
                     <%= item.shipping_charge.name %>
                   </span>
                   <div class='star-btn'>
-                    <%= image_tag "star.png", class:"star-icon" %>
+                    <%= image_tag "star.png", class: "star-icon" %>
                     <span class='star-count'>0</span>
                   </div>
                 </div>
@@ -44,16 +43,15 @@
           </li>
         <% end %>
       <% else %>
-  
         <li class='list'>
-          <%= link_to '#' do %>
+          <%= link_to "#", data: { turbo: false } do %>
             <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
             <div class='item-info'>
               <h3 class='item-name'>商品を出品してね！</h3>
               <div class='item-price'>
-                <span>99999999円<br>(税込み)</span>
+                <span><%= number_to_currency(99999999, unit: "¥", precision: 0) %><br>(税込み)</span>
                 <div class='star-btn'>
-                  <%= image_tag "star.png", class:"star-icon" %>
+                  <%= image_tag "star.png", class: "star-icon" %>
                   <span class='star-count'>0</span>
                 </div>
               </div>
@@ -63,12 +61,11 @@
       <% end %>
     </ul>
   </div>
-
 </div>
 
-<%= link_to(new_item_path, class: 'purchase-btn') do %>
+<%= link_to new_item_path, class: 'purchase-btn', data: { turbo: false } do %>
   <span class='purchase-btn-text'>出品する</span>
-  <%= image_tag 'icon_camera.png' , size: '185x50' ,class: "purchase-btn-icon" %>
+  <%= image_tag 'icon_camera.png', size: '185x50', class: "purchase-btn-icon" %>
 <% end %>
 
 <%= render "shared/footer" %>
