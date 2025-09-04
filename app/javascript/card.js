@@ -4,7 +4,6 @@ function setupPayjpForm() {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  // mount先を毎回リセット
   ["card-number", "card-exp", "card-cvc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = "";
@@ -33,6 +32,8 @@ function setupPayjpForm() {
     if (error) {
       console.error("Payjp Error:", error); 
       showError("クレジットカード情報を正しく入力してください");
+
+      form.submit();
       return;
     }
 
@@ -63,6 +64,7 @@ function showError(message) {
   li.innerText = message;
   errorBox.appendChild(li);
 }
+
 
 
 
