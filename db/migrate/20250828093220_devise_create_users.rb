@@ -15,7 +15,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.1]
       t.date   :birthday,           null: false
 
       ## Recoverable
-      t.string   :reset_password_token
+      t.string   :reset_password_token, limit: 190
       t.datetime :reset_password_sent_at
 
       ## Rememberable
