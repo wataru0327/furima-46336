@@ -19,9 +19,10 @@ Rails.application.configure do
   # SSL を強制する設定は一時的にオフにする
   # config.force_ssl = true
 
-  config.logger = ActiveSupport::Logger.new(STDOUT)
-    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
-    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+# config.logger = ActiveSupport::Logger.new(STDOUT)
+#   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+#   .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+
 
   config.log_tags = [ :request_id ]
 
