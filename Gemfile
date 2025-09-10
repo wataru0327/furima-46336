@@ -12,16 +12,18 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
-gem 'devise'
+gem "devise"
+gem "active_hash"
+gem "payjp"
+gem "aws-sdk-s3", require: false
 
 group :production do
-  gem "pg", "~> 1.5"
-  gem "unicorn", "6.1.0"   # ← ここに追加
+  gem "mysql2", "~> 0.5"
+  gem "unicorn", "6.1.0"
 end
 
 group :development, :test do
   gem "mysql2", "~> 0.5"
-
   gem "debug", platforms: %i[ mri windows ]
   gem "rspec-rails"
   gem "factory_bot_rails"
@@ -36,9 +38,6 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end
 
-gem 'active_hash'
-gem 'payjp'
-gem "aws-sdk-s3", require: false
