@@ -16,7 +16,6 @@ gem "devise"
 gem "active_hash"
 gem "payjp"
 gem "aws-sdk-s3", require: false
-gem "nokogiri", "~> 1.18", platforms: :ruby   # ★ Nokogiri を ruby platform で追加
 
 group :production do
   gem "mysql2", "~> 0.5"
@@ -48,3 +47,4 @@ group :test do
 end
 
 
+gem "nokogiri", force_ruby_platform: true
