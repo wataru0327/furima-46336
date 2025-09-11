@@ -16,8 +16,7 @@ Rails.application.configure do
 
   config.active_storage.service = :amazon
 
-  # SSL を強制する設定は一時的にオフにする
-  # config.force_ssl = true
+  config.force_ssl = false
 
 # config.logger = ActiveSupport::Logger.new(STDOUT)
 #   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
