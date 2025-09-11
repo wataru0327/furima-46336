@@ -16,6 +16,7 @@ gem "devise"
 gem "active_hash"
 gem "payjp"
 gem "aws-sdk-s3", require: false
+gem "nokogiri", "~> 1.18", platforms: :ruby   # ★ Nokogiri を ruby platform で追加
 
 group :production do
   gem "mysql2", "~> 0.5"
@@ -28,11 +29,11 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano3-unicorn'
+  gem "capistrano"
+  gem "capistrano-rbenv"
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano3-unicorn"
 end
 
 group :development do
@@ -45,4 +46,5 @@ group :test do
   gem "selenium-webdriver"
   gem "database_cleaner-active_record"
 end
+
 
