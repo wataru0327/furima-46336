@@ -40,8 +40,8 @@ function setupPayjpForm() {
     e.preventDefault();
 
     try {
-      // ✅ elements 全体を渡してトークンを作成
-      const { error, token } = await payjp.createToken(elements);
+      // ✅ numberElement を渡すのが正解
+      const { error, token } = await payjp.createToken(numberElement);
 
       if (error) {
         console.error("Payjp Error:", error);
