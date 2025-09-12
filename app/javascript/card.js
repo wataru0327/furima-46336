@@ -25,6 +25,7 @@ function setupPayjpForm() {
   const payjp = Payjp(publicKey);
   const elements = payjp.elements();
 
+  // カード情報入力欄を作成
   const numberElement = elements.create("cardNumber");
   numberElement.mount("#card-number");
 
@@ -34,12 +35,13 @@ function setupPayjpForm() {
   const cvcElement = elements.create("cardCvc");
   cvcElement.mount("#card-cvc");
 
+  // フォーム送信時の処理
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     try {
-      // ✅ 正しく { token, error } を受け取る
-      const { error, token } = await payjp.createToken(numberElement);
+      // ✅ elements 全体を渡してトークンを作成
+      const { error, token } = await payjp.createToken(elements);
 
       if (error) {
         console.error("Payjp Error:", error);
