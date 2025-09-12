@@ -37,23 +37,30 @@ function setupPayjpForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // ★ 修正ポイント: { error, token } を受け取る
-    const { error, token } = await payjp.createToken(numberElement);
+    try {
+      // ✅ 正しく { token, error } を受け取る
+      const { error, token } = await payjp.createToken(numberElement);
 
-    if (error) {
-      console.error("Payjp Error:", error); 
-      showError("クレジットカード情報を正しく入力してください");
-      return;
+      if (error) {
+        console.error("Payjp Error:", error);
+        showError("クレジットカード情報を正しく入力してください");
+        return;
+      }
+
+      console.log("Payjp Token:", token);
+
+      // ✅ token.id を hidden フィールドに追加
+      const tokenObj = document.createElement("input");
+      tokenObj.type = "hidden";
+      tokenObj.name = "token";
+      tokenObj.value = token.id;
+      form.appendChild(tokenObj);
+
+      form.submit();
+    } catch (e) {
+      console.error("Token creation failed:", e);
+      showError("通信エラーが発生しました。時間をおいて再度お試しください。");
     }
-
-    // ★ 修正ポイント: token.id を使う
-    const tokenObj = document.createElement("input");
-    tokenObj.type = "hidden";
-    tokenObj.name = "token";
-    tokenObj.value = token.id;
-    form.appendChild(tokenObj);
-
-    form.submit();
   });
 }
 
