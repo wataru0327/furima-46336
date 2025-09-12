@@ -19,7 +19,7 @@ class CreateActiveStorageTables < ActiveRecord::Migration[7.0]
         t.datetime :created_at, null: false
       end
 
-      # 修正ポイント（length: 191 を追加）
+      # length: 191 を追加
       t.index [ :key ], unique: true, length: 191
     end
 
@@ -34,7 +34,12 @@ class CreateActiveStorageTables < ActiveRecord::Migration[7.0]
         t.datetime :created_at, null: false
       end
 
-      t.index [ :record_type, :record_id, :name, :blob_id ], name: :index_active_storage_attachments_uniqueness, unique: true
+      # length: { record_type: 191, name: 191 } を追加
+      t.index [ :record_type, :record_id, :name, :blob_id ],
+              name: :index_active_storage_attachments_uniqueness,
+              unique: true,
+              length: { record_type: 191, name: 191 }
+
       t.foreign_key :active_storage_blobs, column: :blob_id
     end
 
@@ -56,4 +61,5 @@ class CreateActiveStorageTables < ActiveRecord::Migration[7.0]
       [primary_key_type, foreign_key_type]
     end
 end
+
 
