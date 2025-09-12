@@ -15,6 +15,7 @@ function setupPayjpForm() {
     return;
   }
 
+  // カード入力欄の初期化
   ["card-number", "card-exp", "card-cvc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = "";
@@ -41,8 +42,7 @@ function setupPayjpForm() {
     if (error) {
       console.error("Payjp Error:", error); 
       showError("クレジットカード情報を正しく入力してください");
-      form.submit();
-      return;
+      return; // ← form.submit() は削除
     }
 
     const tokenObj = document.createElement("input");
