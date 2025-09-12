@@ -40,22 +40,22 @@ function setupPayjpForm() {
     e.preventDefault();
 
     try {
-      // ✅ numberElement を渡すのが正解
-      const { error, token } = await payjp.createToken(numberElement);
+      // ✅ createToken の戻り値をオブジェクトで受け取る
+      const result = await payjp.createToken(numberElement);
 
-      if (error) {
-        console.error("Payjp Error:", error);
+      if (result.error) {
+        console.error("Payjp Error:", result.error);
         showError("クレジットカード情報を正しく入力してください");
         return;
       }
 
-      console.log("Payjp Token:", token);
+      console.log("Payjp Token:", result.token);
 
       // ✅ token.id を hidden フィールドに追加
       const tokenObj = document.createElement("input");
       tokenObj.type = "hidden";
       tokenObj.name = "token";
-      tokenObj.value = token.id;
+      tokenObj.value = result.token.id;
       form.appendChild(tokenObj);
 
       form.submit();
@@ -83,6 +83,7 @@ function showError(message) {
   li.innerText = message;
   errorBox.appendChild(li);
 }
+
 
 
 
