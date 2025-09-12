@@ -1,5 +1,5 @@
 # サーバ上でのアプリケーションコードが設置されているディレクトリを変数に入れておく
-app_path = File.expand_path('../../../', __FILE__)
+app_path = File.expand_path('../../', __FILE__)
 
 # Rails環境を指定（productionをデフォルトにする）
 rails_env = ENV['RAILS_ENV'] || "production"
