@@ -1,15 +1,24 @@
 document.addEventListener("turbo:load", setupPayjpForm);
+document.addEventListener("DOMContentLoaded", setupPayjpForm);
 
 function setupPayjpForm() {
+  console.log("setupPayjpForm called");
+
   const form = document.getElementById("charge-form");
+  console.log("form:", form);
+
   if (!form) return;
+
+  console.log("Payjp:", Payjp);
+  if (typeof Payjp === "undefined") {
+    console.error("Payjp is not loaded");
+    return;
+  }
 
   ["card-number", "card-exp", "card-cvc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = "";
   });
-
-  if (typeof Payjp === "undefined") return;
 
   const publicKey = document.querySelector("meta[name='payjp-public-key']").content;
   const payjp = Payjp(publicKey);
@@ -32,7 +41,6 @@ function setupPayjpForm() {
     if (error) {
       console.error("Payjp Error:", error); 
       showError("クレジットカード情報を正しく入力してください");
-
       form.submit();
       return;
     }
