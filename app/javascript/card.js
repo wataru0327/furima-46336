@@ -9,9 +9,11 @@ function setupPayjpForm() {
     return;
   }
 
+  // フォームをリセット（複数回バインド防止）
   const newForm = form.cloneNode(true);
   form.parentNode.replaceChild(newForm, form);
 
+  // カード入力欄の初期化
   ["card-number", "card-exp", "card-cvc"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = "";
@@ -30,27 +32,29 @@ function setupPayjpForm() {
   const cvcElement = elements.create("cardCvc");
   cvcElement.mount("#card-cvc");
 
+  // フォーム送信時の処理
   newForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     try {
+      // トークン作成を試みる
       const result = await payjp.createToken(numberElement);
 
       if (result.id) {
-        // トークンがある場合だけ hidden に追加
+        // トークンが生成された場合のみ hidden に追加
         const tokenObj = document.createElement("input");
         tokenObj.type = "hidden";
         tokenObj.name = "token";
         tokenObj.value = result.id;
         newForm.appendChild(tokenObj);
       }
-      // トークンがなくても submit → Rails 側で "Token can't be blank" が出る
-      newForm.submit();
-
     } catch (e) {
       console.error("Token creation failed:", e);
-      newForm.submit(); // 失敗しても Rails に任せる
+      // 何もせずそのまま Rails 側に任せる
     }
+
+    // ✅ 成功でも失敗でも最後に必ず submit → Rails がバリデーション実行
+    newForm.submit();
   });
 }
 
