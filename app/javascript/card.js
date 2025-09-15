@@ -1,14 +1,9 @@
 document.addEventListener("turbo:load", setupPayjpForm);
 
 function setupPayjpForm() {
-  console.log("setupPayjpForm called");
-
   const form = document.getElementById("charge-form");
-  console.log("form:", form);
-
   if (!form) return;
 
-  console.log("Payjp:", Payjp);
   if (typeof Payjp === "undefined") {
     console.error("Payjp is not loaded");
     return;
@@ -40,29 +35,25 @@ function setupPayjpForm() {
 
     try {
       const result = await payjp.createToken(numberElement);
-      console.log("createToken result:", result);
 
-      if (result.error || !result.id) {
-        console.error("Payjp Error:", result.error);
-        alert("カード情報が正しく入力されていません。");
-        return; // ❌ submitしない
+      if (result.id) {
+        // トークンがある場合だけ hidden に追加
+        const tokenObj = document.createElement("input");
+        tokenObj.type = "hidden";
+        tokenObj.name = "token";
+        tokenObj.value = result.id;
+        newForm.appendChild(tokenObj);
       }
-
-      console.log("Payjp Token:", result.id);
-
-      const tokenObj = document.createElement("input");
-      tokenObj.type = "hidden";
-      tokenObj.name = "token";
-      tokenObj.value = result.id;
-      newForm.appendChild(tokenObj);
-
+      // トークンがなくても submit → Rails 側で "Token can't be blank" が出る
       newForm.submit();
+
     } catch (e) {
       console.error("Token creation failed:", e);
-      alert("カード情報の登録中にエラーが発生しました。時間を置いて再度お試しください。");
+      newForm.submit(); // 失敗しても Rails に任せる
     }
   });
 }
+
 
 
 
