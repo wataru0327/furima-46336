@@ -8,11 +8,18 @@ class OrdersController < ApplicationController
   end
 
   def create
+    Rails.logger.info "DEBUG: params[:token] = #{params[:token]}"
+    Rails.logger.info "DEBUG: order_params = #{order_params.inspect}"
+
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
-      pay_item   
-      @order_address.save
-      redirect_to root_path, notice: "購入が完了しました"
+      if pay_item
+        @order_address.save
+        redirect_to root_path, notice: "購入が完了しました"
+      else
+        flash.now[:alert] = "決済処理に失敗しました。時間をおいて再度お試しください。"
+        render :index, status: :unprocessable_entity
+      end
     else
       render :index, status: :unprocessable_entity
     end
@@ -37,14 +44,21 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = Rails.application.credentials.dig(:payjp, :secret_key)  
-    Payjp::Charge.create(
-      amount: @item.price,            
-      card: order_params[:token],     
-      currency: 'jpy'                 
-    )
+    Payjp.api_key = Rails.application.credentials.dig(:payjp, :secret_key)
+    begin
+      Payjp::Charge.create(
+        amount: @item.price,           # 商品の価格
+        card: order_params[:token],    # ✅ ここを card に変更
+        currency: 'jpy'
+      )
+      true
+    rescue Payjp::PayjpError => e
+      Rails.logger.error "Payjp error: #{e.message}"
+      false
+    end
   end
 end
+
 
 
 

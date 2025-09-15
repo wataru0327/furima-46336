@@ -11,7 +11,7 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_one :order 
 
-  with_options presence: true do
+  with_options presence: { message: "を入力してください" } do
     validates :name
     validates :description
     validates :image
@@ -26,11 +26,16 @@ class Item < ApplicationRecord
     validates :days_to_ship_id
   end
 
+  validates :price, numericality: { only_integer: true, message: "は半角数字で入力してください" }
+
   validates :price, numericality: {
-    only_integer: true,                        
-    greater_than_or_equal_to: 300,             
-    less_than_or_equal_to: 9_999_999,            
-    message: "は半角数字で入力してください"
+    greater_than_or_equal_to: 300,
+    message: "は300以上の値にしてください"
+  }
+  validates :price, numericality: {
+    less_than_or_equal_to: 9_999_999,
+    message: "は9999999以下の値にしてください"
   }
 end
+
 
