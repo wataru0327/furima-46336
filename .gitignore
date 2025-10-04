@@ -40,9 +40,7 @@
 *:[Zz]one.Identifier
 
 # Capistrano deploy directories
-current/
-releases/
-shared/
-
-# Git internal folder (just in case)
-.git/
+/current
+/releases
+/shared
+/repo
