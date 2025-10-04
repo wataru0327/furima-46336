@@ -1,18 +1,18 @@
 # サーバ上でのアプリケーションコードが設置されているディレクトリ
-app_path = File.expand_path('../../../', __FILE__)
+app_path = File.expand_path('../..', __FILE__)
 
 # Rails環境
 rails_env = ENV['RAILS_ENV'] || "production"
 
 # Unicornの設定
 worker_processes 1
-working_directory "#{app_path}/current"
+working_directory app_path
 
-pid    "#{app_path}/shared/tmp/pids/unicorn.pid"
-listen "#{app_path}/shared/tmp/sockets/unicorn.sock"
+pid "#{app_path}/tmp/pids/unicorn.pid"
+listen "#{app_path}/tmp/sockets/unicorn.sock"
 
-stderr_path "#{app_path}/shared/log/unicorn.stderr.log"
-stdout_path "#{app_path}/shared/log/unicorn.stdout.log"
+stderr_path "#{app_path}/log/unicorn.stderr.log"
+stdout_path "#{app_path}/log/unicorn.stdout.log"
 
 timeout 60
 preload_app true
